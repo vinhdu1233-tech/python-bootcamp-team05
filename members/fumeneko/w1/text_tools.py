@@ -13,6 +13,6 @@ def word_count(text: str) -> dict:
 
 def top_k(text: str, k: int) -> list[tuple[str, int]]:
     counts = word_count(text)
-    # Sắp xếp theo số lần xuất hiện giảm dần, nếu bằng nhau thì theo thứ tự bảng chữ cái
+    # Sort by descending order, else sort by alphatical order.
     sorted_words = sorted(counts.items(), key=lambda x: (-x[1], x[0]))
     return sorted_words[:k]
