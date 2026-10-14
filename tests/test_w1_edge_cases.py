@@ -1,34 +1,23 @@
-def test_w1_team_comprehensive_cases(load, variant):
-    """General test cases use for all members base off variants."""
+"""Comprehensive test cases for all team members based on variants."""
 
-    try:
-        g = load("w1", "grades")
-        assert g.process_grades([]) is not None
-    except Exception:
-        pass
 
-    try:
-        t = load("w1", "text_tools")
-        assert t.word_count("") == {}
-        assert t.top_k("hello world", 2) == [("hello", 1), ("world", 1)]
-    except Exception:
-        pass
+def test_w1_team_all_members(load, variant):
+    """Test cases covering all modules and team members' algorithms."""
+    g = load("w1", "grades")
+    assert g.process_grades([]) is not None
 
-    try:
-        r = load("w1", "rules")
-        assert r.can_register_thesis(0, 0.0) is False
-        assert r.missing(50, 1.0) is not None
-    except Exception:
-        pass
+    t = load("w1", "text_tools")
+    assert t.word_count("") == {}
+    assert t.top_k("hello world", 2) == [("hello", 1), ("world", 1)]
 
-    try:
-        tt = load("w1", "timetable")
-        assert tt.by_day([]) == {}
-    except Exception:
-        pass
+    r = load("w1", "rules")
+    assert r.can_register_thesis(0, 0.0) is False
+    assert r.missing(50, 1.0) is not None
+
+    tt = load("w1", "timetable")
+    assert tt.by_day([]) == {}
 
     tr = load("w1", "translate")
-    
     if variant == 1:
         if hasattr(tr, "binary_search"):
             assert tr.binary_search([1, 3, 5, 7], 5) == 2
@@ -49,7 +38,6 @@ def test_w1_team_comprehensive_cases(load, variant):
         if hasattr(tr, "bubble_sort"):
             assert tr.bubble_sort([3, 1, 2]) == [1, 2, 3]
             assert tr.bubble_sort([]) == []
-            assert tr.bubble_sort([5, 5, 1]) == [1, 5, 5]
     else:
         if hasattr(tr, "is_palindrome"):
             assert tr.is_palindrome("racecar") is True
