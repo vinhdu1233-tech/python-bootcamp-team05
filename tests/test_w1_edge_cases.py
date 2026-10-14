@@ -1,8 +1,8 @@
-"""Comprehensive test cases for all team members based on variants."""
+"""Comprehensive edge case tests for all team members and variants."""
 
 
-def test_w1_team_all_members(load, variant):
-    """Test cases covering all modules and team members' algorithms."""
+def test_w1_edge_cases_comprehensive(load, variant):
+    """Test edge cases for all shared modules and team variants."""
     g = load("w1", "grades")
     assert g.process_grades([]) is not None
 
