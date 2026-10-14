@@ -1,5 +1,6 @@
 import string
 
+
 def word_count(text: str) -> dict:
     if not text or not text.strip():
         return {}
