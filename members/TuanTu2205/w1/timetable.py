@@ -1,4 +1,4 @@
-def by_day(items: list[tuple[str, str]]) -> dict(str, list[str]):
+def by_day(items: list[tuple[str, str]]) -> dict[str, list[str]]:
     timetable = {}
 
 

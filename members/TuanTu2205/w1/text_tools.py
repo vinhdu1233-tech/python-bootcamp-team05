@@ -1,7 +1,7 @@
 def word_count(text: str) -> dict[str, int]:
     text = text.lower()
 
-    for mark in ".,!?:":
+    for mark in ".,!?;:":
         text = text.replace(mark, " ")
 
     words = text.split()
