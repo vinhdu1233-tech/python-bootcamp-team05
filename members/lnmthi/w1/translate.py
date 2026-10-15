@@ -1,9 +1,5 @@
 
 def binary_search(a: list[int], key: int) -> int:
-    """Search a sorted list and return the index or -1.
-
-    Python lists support direct indexing, unlike C++ iterators.
-    """
     lo = 0
     hi = len(a) - 1
 
