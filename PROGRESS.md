@@ -16,12 +16,12 @@ Each member must:
 
 | Member | Week | Issue | PR | Reviewer | Tests | Hours |
 |--------|------|-------|----|----------|-------|-------|
-| vinhdu1233-tech | w1 | #8 | #9 (merged) | Not recorded | Pending instructor tests | TBD |
-| TuanTu2205 | w1 | TBD | TBD | TBD | Pending instructor tests | TBD |
-| tree312-coder | w1 | TBD | TBD | TBD | Pending instructor tests | TBD |
-| dmdung2520 | w1 | TBD | TBD | TBD | Pending instructor tests | TBD |
-| fumeneko | w1 | TBD | TBD | TBD | Pending instructor tests | TBD |
-| lnmthi | w1 | TBD | TBD | TBD | Pending instructor tests | TBD |
+| vinhdu1233-tech | w1 | #8 | #9 (merged) | Not recorded | Pending instructor tests | 4 |
+| TuanTu2205 | w1 | #18 | #17 (merged) | vinhdu1233-tech | Pending instructor tests | 3 |
+| tree312-coder | w1 | #21 | #13 (merged) | vinhdu1233-tech | Pending instructor tests | 4 |
+| dmdung2520 | w1 | #24 | #23 (merged) | vinhdu1233-tech | Pending instructor tests | 3.5 |
+| fumeneko | w1 | #16 | #15 (merged) | vinhdu1233-tech | Pending instructor tests | 3 |
+| lnmthi | w1 | #22 | #10 (merged) | vinhdu1233-tech | Pending instructor tests | 3.5 |
 
 ## Testing Status
 
