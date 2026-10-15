@@ -34,7 +34,7 @@
 
 
 #member 4_dmdung2520 - Python Starting Point
-def sieve_of_eratosthenes(n):
+def sieve(n):
     if n < 2:
         return []
     
@@ -49,5 +49,3 @@ def sieve_of_eratosthenes(n):
         
     primes = [i for i, prime in enumerate(is_prime) if prime]
     return primes
-
-print(sieve_of_eratosthenes(30))
