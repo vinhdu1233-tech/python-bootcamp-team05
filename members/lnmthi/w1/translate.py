@@ -1,20 +1,16 @@
 
-def insertion_sort(a: list[int]) -> list[int]:
-    for i in range(1, len(a)):
-        key = a[i]
-        j = i - 1
+def is_palindrome(text: str) -> bool:
+    """Check whether text reads the same forwards and backwards.
 
-        while j >= 0 and a[j] > key:
-            a[j + 1] = a[j]
-            j -= 1
-
-        a[j + 1] = key
-
-    return a
+    Unlike the original C++ sorting task, this function checks a string
+    and returns a boolean instead of sorting a list.
+    """
+    cleaned = "".join(char.lower() for char in text if char.isalnum())
+    return cleaned == cleaned[::-1]
 
 
 if __name__ == "__main__":
-    numbers = [5, 2, 4, 6, 1, 3]
-    print(insertion_sort(numbers))
-    print(insertion_sort([]))
-    print(insertion_sort([3, 3, 1, 2]))
+    print(is_palindrome("madam"))  # True
+    print(is_palindrome("hello"))  # False
+    print(is_palindrome("A man, a plan, a canal: Panama!"))  # True
+    print(is_palindrome(""))  # True
