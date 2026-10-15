@@ -1,24 +1,20 @@
 
-def binary_search(a: list[int], key: int) -> int:
-    lo = 0
-    hi = len(a) - 1
+def insertion_sort(a: list[int]) -> list[int]:
+    for i in range(1, len(a)):
+        key = a[i]
+        j = i - 1
 
-    while lo <= hi:
-        mid = lo + (hi - lo) // 2
+        while j >= 0 and a[j] > key:
+            a[j + 1] = a[j]
+            j -= 1
 
-        if a[mid] == key:
-            return mid
+        a[j + 1] = key
 
-        if a[mid] < key:
-            lo = mid + 1
-        else:
-            hi = mid - 1
-
-    return -1
+    return a
 
 
 if __name__ == "__main__":
-    numbers = [1, 3, 5, 7, 9]
-    print(binary_search(numbers, 5))   # 2
-    print(binary_search(numbers, 4))   # -1
-    print(binary_search([], 1))        # -1
+    numbers = [5, 2, 4, 6, 1, 3]
+    print(insertion_sort(numbers))
+    print(insertion_sort([]))
+    print(insertion_sort([3, 3, 1, 2]))
