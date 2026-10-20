@@ -31,13 +31,13 @@ python -m pip install pytest ruff
 Run the bootcamp tests after the instructor-provided tests have been added:
 
 ```bash
-python -m pytest -q python-bootcamp
+python -m pytest -q .
 ```
 
 Check code quality:
 
 ```bash
-ruff check python-bootcamp
+ruff check .
 ```
 
 ## Homework Tracking
