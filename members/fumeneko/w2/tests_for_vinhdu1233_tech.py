@@ -1,8 +1,10 @@
 import pytest
+
 from members.vinhdu1233_tech.w1.grades import summary
-from members.vinhdu1233_tech.w1.text_tools import word_count, top_k
 from members.vinhdu1233_tech.w1.rules import can_register_thesis, missing
+from members.vinhdu1233_tech.w1.text_tools import top_k
 from members.vinhdu1233_tech.w1.timetable import by_day
+
 
 def test_summary_grades():
     # Kiểm tra hàm tính toán điểm (W1-1)
