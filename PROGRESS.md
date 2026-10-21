@@ -23,6 +23,17 @@ Each member must:
 | fumeneko | w1 | #16 | #15 (merged) | vinhdu1233-tech | Pending instructor tests | 3 |
 | lnmthi | w1 | #22 | #10 (merged) | vinhdu1233-tech | Pending instructor tests | 3.5 |
 
+## Week 2 — Modules, Files, Errors and Classes
+
+| Member | Week | Issue | PR | Reviewer | Tests | Hours |
+|---|---|---|---|---|---|---|
+| vinhdu1233-tech | w2 | #1 | #2 | Pending | Pending | 4 |
+| TuanTu2205 | w2 | Pending | Pending | Pending | Pending | 0 |
+| tree312-coder | w2 | Pending | Pending | Pending | 0 |
+| dmdung2520 | w2 | Pending | Pending | Pending | Pending | 0 |
+| fumeneko | w2 | #11 | #12 (pending) | Pending | Pending | 3.5 |
+| lnmthi | w2 | Pending | #13 | Pending | Pending | 0 |
+
 ## Testing Status
 
 The instructor-provided test suite has not been released yet.
