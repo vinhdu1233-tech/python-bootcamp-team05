@@ -18,7 +18,7 @@ def test_pipeline_empty_csv(tmp_path):
     prioritized = prioritise(tasks, today)
     assert len(prioritized) == 0
 
-    blocks = allocate(prioritized, available_hours=5.0)
+    blocks = allocate(prioritized, hours=5.0)
     assert len(blocks) == 0
 
     output = render(blocks)
@@ -43,12 +43,12 @@ def test_pipeline_overdue_and_zero_hours(tmp_path):
     prioritized = prioritise(tasks, today)
     assert len(prioritized) == 1
 
-    # Thử nghiệm với available_hours = 0.0
-    blocks = allocate(prioritized, available_hours=0.0)
+    # Thử nghiệm với hours = 0.0
+    blocks = allocate(prioritized, hours=0.0)
     assert len(blocks) == 0
 
-    # Thử nghiệm với available_hours đủ thời gian
-    blocks_allocated = allocate(prioritized, available_hours=5.0)
+    # Thử nghiệm với availhours đủ thời gian
+    blocks_allocated = allocate(prioritized, hours=5.0)
     assert len(blocks_allocated) == 1
     assert blocks_allocated[0].task.title == "Old Task"
 
