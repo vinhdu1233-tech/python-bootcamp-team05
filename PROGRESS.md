@@ -39,7 +39,9 @@ Each member must:
 The instructor-provided test suite has not been released yet.
 
 Official tests:
+
 Week 1: Pending
+
 Week 2: Pending
 
 Manual testing may be performed, but it must be clearly distinguished from official test results.
