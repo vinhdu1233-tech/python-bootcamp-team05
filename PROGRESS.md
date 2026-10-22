@@ -31,7 +31,7 @@ Each member must:
 | TuanTu2205 | w2 | #18 | #19 | Pending | Pending instructor tests | 0 |
 | tree312-coder | w2 | Pending | #17 | Pending | Pending instructor tests | 0 |
 | dmdung2520 | w2 | Pending | Pending | Pending | Pending instructor tests | 0 |
-| fumeneko | w2 | #11 | #12 (pending) | Pending | Pending instructor tests | 3.5 |
+| fumeneko | w2 | #11 | #12 | Pending | Pending instructor tests | 3.5 |
 | lnmthi | w2 | Pending | #13 | Pending | Pending instructor tests | 0 |
 
 ## Testing Status
