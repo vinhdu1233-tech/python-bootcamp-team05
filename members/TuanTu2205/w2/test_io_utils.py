@@ -74,3 +74,15 @@ def test_empty_title(tmp_path):
 
     with pytest.raises(ValueError, match="line 2"):
         load_tasks(csv_file)
+
+
+def test_extra_csv_value(tmp_path):
+    csv_file = tmp_path / "tasks.csv"
+    csv_file.write_text(
+        "title,importance,effort_h,deadline\n"
+        "DS exam,5,6,2026-10-30,EXTRA\n",
+        encoding="utf-8",
+    )
+
+    with pytest.raises(ValueError, match="line 2"):
+        load_tasks(csv_file)

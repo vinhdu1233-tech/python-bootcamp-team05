@@ -20,6 +20,9 @@ def load_tasks(path) -> list[Task]:
 
         for row in reader:
             try:
+                if None in row:
+                    raise ValueError("Extra CSV values")
+
                 title = row["title"].strip()
 
                 if not title:
