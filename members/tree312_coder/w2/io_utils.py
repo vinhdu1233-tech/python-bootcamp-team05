@@ -12,7 +12,6 @@ def load_tasks(path: str | Path) -> list[Task]:
 
     with open(path, "r", newline="", encoding="utf-8") as file:
         reader = csv.DictReader(file)
-
         required_fields = {"title", "importance", "effort_h", "deadline"}
 
         if reader.fieldnames is None or not required_fields.issubset(reader.fieldnames):
@@ -22,8 +21,18 @@ def load_tasks(path: str | Path) -> list[Task]:
             line = reader.line_num
 
             try:
+                if None in row:
+                    raise ValueError("Too many values.")
+
+                if any(row[field] is None for field in required_fields):
+                    raise ValueError("Missing values.")
+
+                title = row["title"].strip()
+                if not title:
+                    raise ValueError("Title cannot be empty.")
+
                 task = Task(
-                    title=row["title"],
+                    title=title,
                     importance=int(row["importance"]),
                     effort_h=float(row["effort_h"]),
                     deadline=date.fromisoformat(row["deadline"]),
@@ -36,7 +45,6 @@ def load_tasks(path: str | Path) -> list[Task]:
                 ) from error
 
     return tasks
-
 
 def save_json(tasks: list[Task], path: str | Path) -> None:
     data = []
