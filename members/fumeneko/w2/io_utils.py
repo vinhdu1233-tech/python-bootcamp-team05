@@ -1,40 +1,72 @@
 import csv
 import json
+import math
 from datetime import date
+from pathlib import Path
 
-from .models import Task  # Giả sử Task được import từ models.py trong cùng gói
+from .models import Task
 
 
-def load_tasks(path: str) -> list[Task]:
-    """Đọc danh sách Task từ file CSV. Ném ValueError kèm số dòng nếu dữ liệu lỗi."""
+def load_tasks(path: str | Path) -> list[Task]:
+    """Load tasks from CSV, raising ValueError with the relevant line number."""
     tasks = []
-    with open(path, mode='r', encoding='utf-8') as f:
-        reader = csv.DictReader(f)
-        # Bắt đầu từ dòng 2 (vì dòng 1 là header)
-        for line_num, row in enumerate(reader, start=2):
+    expected_fields = ["title", "importance", "effort_h", "deadline"]
+
+    with open(path, mode="r", newline="", encoding="utf-8") as file:
+        reader = csv.DictReader(file)
+
+        if reader.fieldnames != expected_fields:
+            raise ValueError(
+                f"Invalid CSV header at line 1: expected {expected_fields}"
+            )
+
+        for row in reader:
+            line_num = reader.line_num
             try:
-                title = row['title'].strip()
-                importance = int(row['importance'])
-                effort_h = float(row['effort_h'])
-                deadline = date.fromisoformat(row['deadline'].strip())
-                
-                task = Task(title=title, importance=importance, effort_h=effort_h, deadline=deadline)
-                tasks.append(task)
-            except (ValueError, KeyError, AttributeError) as e:
-                raise ValueError(f"Invalid row at line {line_num}: {e}")
-                
+                if None in row or any(row.get(field) is None for field in expected_fields):
+                    raise ValueError("missing or extra CSV fields")
+
+                title = row["title"].strip()
+                if not title:
+                    raise ValueError("title cannot be empty")
+
+                importance = int(row["importance"])
+                if not 1 <= importance <= 5:
+                    raise ValueError("importance must be between 1 and 5")
+
+                effort_h = float(row["effort_h"])
+                if not math.isfinite(effort_h) or effort_h < 0:
+                    raise ValueError("effort_h must be a finite non-negative number")
+
+                deadline = date.fromisoformat(row["deadline"].strip())
+
+                tasks.append(
+                    Task(
+                        title=title,
+                        importance=importance,
+                        effort_h=effort_h,
+                        deadline=deadline,
+                    )
+                )
+            except (TypeError, ValueError, AttributeError) as error:
+                raise ValueError(
+                    f"Invalid row at line {line_num}: {error}"
+                ) from error
+
     return tasks
 
-def save_json(tasks: list[Task], path: str) -> None:
-    """Lưu danh sách Task ra file JSON."""
-    data = []
-    for t in tasks:
-        data.append({
-            "title": t.title,
-            "importance": t.importance,
-            "effort_h": t.effort_h,
-            "deadline": t.deadline.isoformat()  # Chuyển date thành chuỗi 'YYYY-MM-DD'
-        })
-    
-    with open(path, mode='w', encoding='utf-8') as f:
-        json.dump(data, f, ensure_ascii=False, indent=4)
+
+def save_json(tasks: list[Task], path: str | Path) -> None:
+    """Save tasks to a JSON file."""
+    data = [
+        {
+            "title": task.title,
+            "importance": task.importance,
+            "effort_h": task.effort_h,
+            "deadline": task.deadline.isoformat(),
+        }
+        for task in tasks
+    ]
+
+    with open(path, mode="w", encoding="utf-8") as file:
+        json.dump(data, file, ensure_ascii=False, indent=4)
