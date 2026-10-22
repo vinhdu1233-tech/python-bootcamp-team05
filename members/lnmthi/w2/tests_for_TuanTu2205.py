@@ -10,11 +10,9 @@ W1_PATH = (
     / "w1"
 )
 sys.path.insert(0, str(W1_PATH))
-from text_tools import word_count, top_k
-
-
 # Tests for grades.py
 from grades import summary
+from text_tools import top_k, word_count
 
 
 def test_summary_basic_scores():
@@ -51,7 +49,6 @@ def test_summary_rounds_mean_and_median():
 
 
 def test_summary_empty_scores_raises_error():
-    import pytest
 
     with pytest.raises(ValueError, match="scores must not be empty"):
         summary([])
@@ -86,7 +83,6 @@ def test_rules_missing_both_credits_and_gpa():
     ]
 
 # Tests for text_tools.py
-from text_tools import word_count, top_k
 
 
 def test_word_count_ignores_case():
@@ -117,6 +113,7 @@ def test_top_k_negative_returns_empty_list():
 # Tests for timetable.py
 from timetable import by_day
 
+
 def test_by_day_groups_courses():
     assert by_day([
         ("Math", "Monday"),
@@ -141,6 +138,7 @@ def test_by_day_empty_input():
 
 # Tests for translate.py
 from translate import insertion_sort
+
 
 def test_insertion_sort_unsorted_list():
     assert insertion_sort([4, 2, 3, 1]) == [1, 2, 3, 4]
