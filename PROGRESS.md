@@ -30,7 +30,7 @@ Each member must:
 | vinhdu1233-tech | w2 | #1 | #2 | lnmthi | Pending instructor tests | 4 |
 | TuanTu2205 | w2 | #18 | #19 | vinhdu1233-tech | Pending instructor tests | 3.5 |
 | tree312-coder | w2 | #21 | #17 | TuanTu2205 | Pending instructor tests | 4 |
-| dmdung2520 | w2 | Pending | Pending | tree312-coder | Pending instructor tests | 4.5 |
+| dmdung2520 | w2 | not created | #23 | tree312-coder | Pending instructor tests | 4.5 |
 | fumeneko | w2 | #11 | #12 | dmdung2520 | Pending instructor tests | 4.5 |
 | lnmthi | w2 | #22 | #13 | fumeneko | Pending instructor tests | 5 |
 
