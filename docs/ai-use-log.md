@@ -27,7 +27,7 @@ This section records AI assistance used by Team 05 members during Python Bootcam
 | Member | Week | PR | AI Tool | AI Assistance |
 |---|---|---|---|---|
 | vinhdu1233-tech (M1) | W2 | #2, #3, #4 | ChatGPT | Explained Python concepts, suggested implementations, assisted with shared Task/Block dataclasses, CSV parsing, test-case design, and Git/GitHub workflows. |
-| TuanTu2205 (M2) | W2 | #19, Issue #5 (PR pending) | ChatGPT | Assisted with Python W2-1 to W2-5 implementations, unit tests, cross-member testing, the `prioritise()` algorithm, Ruff troubleshooting, and Git/GitHub workflows. |
+| TuanTu2205 (M2) | W2 | #19, #24 | ChatGPT | Assisted with Python W2-1 to W2-5 implementations, unit tests, cross-member testing, the `prioritise()` algorithm, Ruff troubleshooting, and Git/GitHub workflows. |
 | tree312-coder (M3) | W2 | #17, #20 | ChatGPT | Assisted with implementation guidance, code review, and test-case development for `allocate.py`, as disclosed in PR #20. |
 | dmdung2520 (M4) | W2 | #10, #23 | ChatGPT | Helped understand Issue #7 requirements, coordinate with M3 and M5, explore an implementation approach for `render(blocks)`, and provided testing, Git, and PR workflow guidance. |
 | fumeneko (M5) | W2 | #12, #14, #16 | Gemini 3 / Gemini | Explained Python concepts, suggested initial implementations and test cases, provided Git/GitHub guidance, assisted with pytest fixture setup for integration tests, and supported PROGRESS.md formatting. |
