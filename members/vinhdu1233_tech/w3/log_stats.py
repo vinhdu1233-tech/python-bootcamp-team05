@@ -1,8 +1,8 @@
 """Week 3-2: per-route chat request counts and latency statistics."""
 
 from collections import Counter, defaultdict
+from collections.abc import Iterable
 from math import ceil, isfinite
-from typing import Iterable
 
 
 def analyse(
