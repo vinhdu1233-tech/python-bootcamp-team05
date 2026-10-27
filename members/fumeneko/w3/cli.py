@@ -3,15 +3,15 @@
 import argparse
 import math
 import sys
+from collections.abc import Sequence
 from datetime import date
 from pathlib import Path
-from typing import Sequence
 
+from members.fumeneko.w2.io_utils import load_tasks
 from shared.contract import Task as SharedTask
 from shared.study_planner.allocate import allocate
 from shared.study_planner.prioritise import prioritise
 from shared.study_planner.render import render
-from members.fumeneko.w2.io_utils import load_tasks
 
 
 def _non_negative_hours(value: str) -> float:
