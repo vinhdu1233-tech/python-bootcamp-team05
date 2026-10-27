@@ -32,3 +32,9 @@ This section records AI assistance used by Team 05 members during Python Bootcam
 | dmdung2520 (M4) | W2 | #10, #23 | ChatGPT | Helped understand Issue #7 requirements, coordinate with M3 and M5, explore an implementation approach for `render(blocks)`, and provided testing, Git, and PR workflow guidance. |
 | fumeneko (M5) | W2 | #12, #14, #16 | Gemini 3 / Gemini | Explained Python concepts, suggested initial implementations and test cases, provided Git/GitHub guidance, assisted with pytest fixture setup for integration tests, and supported PROGRESS.md formatting. |
 | lnmthi (M6) | W2 | #13, #15 | ChatGPT | Assisted with sample CSV creation, CSV validation tests, README documentation, Python testing, Ruff troubleshooting, package execution, and Git/GitHub workflows. |
+
+## Week 3 — Python Bootcamp AI Use Log
+
+| Member | Week | PR | AI Tool | Assistance | AI-generated code retained? |
+|---|---|---|---|---|---|
+| vinhdu1233-tech (M1) | W3 | #35 | ChatGPT | Generated first implementations for W3-1 dates, W3-2 route statistics, W3-3 command-line interface, W3-4 type annotations/docstrings, tests and PR documentation; performed GitHub branch, issue, file commits and PR operations via connected tools. | Yes; the member must personally review, run, understand and explain the submission before individual defence. |
