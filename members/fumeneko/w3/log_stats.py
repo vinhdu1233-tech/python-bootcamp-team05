@@ -1,8 +1,8 @@
 """Summarise request counts and latency statistics by route."""
 
 from collections import Counter
+from collections.abc import Iterable
 from math import ceil, isfinite
-from typing import Iterable
 
 
 def analyse(pairs: Iterable[tuple[str, float]]) -> dict[str, object]:
