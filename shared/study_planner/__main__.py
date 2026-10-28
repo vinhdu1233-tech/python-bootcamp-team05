@@ -17,6 +17,7 @@ from collections.abc import Sequence
 from datetime import date
 from pathlib import Path
 
+from members.tree312_coder.w2.errors import InfeasiblePlan, check_feasible
 from shared.study_planner.allocate import allocate
 from shared.study_planner.parse import parse_csv
 from shared.study_planner.prioritise import prioritise
@@ -71,30 +72,65 @@ def build_parser() -> argparse.ArgumentParser:
         metavar="YYYY-MM-DD",
         help="Date to use for prioritisation (default: current date)",
     )
+    parser.add_argument(
+        "--require-complete",
+        action="store_true",
+        help="Require enough hours to complete all tasks",
+    )
     return parser
 
 
-def run_plan(csv_path: Path, hours: float, today: date) -> str:
-    """Use the existing modules to build a study plan without duplicating them."""
+
+def run_plan(
+    csv_path: Path,
+    hours: float,
+    today: date,
+    require_complete: bool = False,
+) -> str:
+    """Build a study plan with optional feasibility checking."""
+
+    # Check whether the CSV file is completely empty.
+    if csv_path.stat().st_size == 0:
+        raise ValueError("CSV file is empty")
+
+    # Load tasks from CSV.
     tasks = parse_csv(csv_path)
+
+    # Require enough time to finish all tasks when requested.
+    if require_complete:
+        check_feasible(tasks, hours)
+
+    # Reuse existing scheduling functions.
     ordered = prioritise(tasks, today)
     blocks = allocate(ordered, hours)
+
     return render(blocks)
 
 
 def main(argv: Sequence[str] | None = None) -> int:
-    """Return 0 on success, 1 for file/data errors, 2 for invalid CLI args."""
+    """Return 0 on success, 1 for data errors, 2 for CLI errors."""
     args = build_parser().parse_args(argv)
+
     try:
-        output = run_plan(args.csv_path, args.hours, args.today)
+        output = run_plan(
+            args.csv_path,
+            args.hours,
+            args.today,
+            require_complete=args.require_complete,
+        )
+
+    except InfeasiblePlan as exc:
+        print(f"Error: {exc}", file=sys.stderr)
+        return 1
+
     except (OSError, UnicodeError, csv.Error, ValueError) as exc:
         print(f"Error: {exc}", file=sys.stderr)
         return 1
 
     if output:
         print(output)
-    return 0
 
+    return 0
 
 if __name__ == "__main__":
     raise SystemExit(main())
