@@ -55,3 +55,15 @@ def test_invalid_deadline(tmp_path):
 
     with pytest.raises(ValueError, match="line 2"):
         parse_csv(path)
+
+@pytest.mark.parametrize("effort", ["nan", "inf", "-inf"])
+def test_non_finite_effort(tmp_path, effort):
+    path = tmp_path / "tasks.csv"
+    path.write_text(
+        "title,importance,effort_h,deadline\n"
+        f"DS exam,5,{effort},2026-10-30\n",
+        encoding="utf-8",
+    )
+
+    with pytest.raises(ValueError, match="line 2"):
+        parse_csv(path)
