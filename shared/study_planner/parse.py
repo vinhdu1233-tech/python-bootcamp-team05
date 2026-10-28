@@ -1,5 +1,6 @@
-
+﻿
 import csv
+import math
 from datetime import date
 from pathlib import Path
 
@@ -34,6 +35,10 @@ def parse_csv(path: str | Path) -> list[Task]:
 
                 if not 1 <= importance <= 5:
                     raise ValueError("Importance must be 1-5")
+
+
+                if not math.isfinite(effort_h):
+                    raise ValueError("Effort must be finite")
 
                 if effort_h < 0:
                     raise ValueError("Effort cannot be negative")
