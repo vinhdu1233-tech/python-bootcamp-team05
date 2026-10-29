@@ -7,7 +7,8 @@ from pathlib import Path
 from .models import Task
 
 
-def load_tasks(path) -> list[Task]:
+def load_tasks(path: str | Path) -> list[Task]:
+    """Load and validate tasks from a CSV file."""
     tasks = []
 
     with Path(path).open(encoding="utf-8", newline="") as file:
@@ -45,7 +46,8 @@ def load_tasks(path) -> list[Task]:
     return tasks
 
 
-def save_json(tasks: list[Task], path) -> None:
+def save_json(tasks: list[Task], path: str | Path) -> None:
+    """Save tasks to JSON with ISO-formatted deadlines."""
     data = []
 
     for task in tasks:
