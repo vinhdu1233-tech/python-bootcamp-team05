@@ -3,7 +3,6 @@
 import re
 from datetime import date, timedelta
 
-
 WEEKDAYS = {
     "mon": 0,
     "monday": 0,
