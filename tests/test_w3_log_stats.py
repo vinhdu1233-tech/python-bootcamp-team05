@@ -41,6 +41,13 @@ def test_analyse_accepts_zero_latency():
     }
 
 
+def test_analyse_tied_p95_uses_first_route():
+    result = analyse([("/first", 10), ("/second", 10)])
+
+    assert result["p95"] == {"/first": 10.0, "/second": 10.0}
+    assert result["slowest"] == "/first"
+
+
 @pytest.mark.parametrize(
     "pairs",
     [
@@ -49,6 +56,9 @@ def test_analyse_accepts_zero_latency():
         [("/api", -1)],
         [("/api", float("inf"))],
         [("/api", float("nan"))],
+        [("/api", "fast")],
+        [("/api", None)],
+        [("/api", True)],
     ],
 )
 def test_analyse_rejects_invalid_pairs(pairs):
