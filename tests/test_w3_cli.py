@@ -1,5 +1,7 @@
 """Tests for the Week 3 study planner command-line interface."""
 
+import pytest
+
 from members.fumeneko.w3.cli import main
 
 
@@ -59,3 +61,20 @@ def test_cli_rejects_invalid_csv_with_exit_one(tmp_path, capsys):
     captured = capsys.readouterr()
     assert exit_code == 1
     assert "Error: could not load tasks:" in captured.err
+
+
+@pytest.mark.parametrize(
+    ("arguments", "message"),
+    [
+        (["tasks.csv", "--hours", "not-a-number"], "hours must be a number"),
+        (["tasks.csv", "--hours", "-1"], "finite and non-negative"),
+        (["tasks.csv", "--hours", "1", "--today", "not-a-date"], "invalid"),
+    ],
+)
+def test_cli_rejects_invalid_arguments(arguments, message, capsys):
+    with pytest.raises(SystemExit) as error:
+        main(arguments)
+
+    captured = capsys.readouterr()
+    assert error.value.code == 2
+    assert message in captured.err
