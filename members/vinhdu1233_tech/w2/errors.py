@@ -5,7 +5,7 @@ from .models import Task
 class InfeasiblePlan(Exception):
     """Raised when required study time exceeds available time."""
 
-    def __init__(self, needed_h: float, available_h: float):
+    def __init__(self, needed_h: float, available_h: float) -> None:
         self.needed_h = needed_h
         self.available_h = available_h
         super().__init__(str(self))
