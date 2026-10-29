@@ -2,8 +2,8 @@
 
 from collections import Counter
 from collections.abc import Iterable
-from numbers import Real
 from math import ceil, isfinite
+from numbers import Real
 
 
 def analyse(pairs: Iterable[tuple[str, float]]) -> dict[str, object]:
@@ -21,8 +21,8 @@ def analyse(pairs: Iterable[tuple[str, float]]) -> dict[str, object]:
         A dictionary with counts, p95, and slowest keys.
 
     Raises:
-        ValueError: If a route is empty or a latency is not a real number,
-            is negative, or is non-finite.
+        TypeError: If a latency is not a real number.
+        ValueError: If a route is empty or a latency is negative or non-finite.
     """
     latencies: dict[str, list[float]] = {}
     counts: Counter[str] = Counter()
@@ -31,7 +31,7 @@ def analyse(pairs: Iterable[tuple[str, float]]) -> dict[str, object]:
         if not isinstance(route, str) or not route.strip():
             raise ValueError("route must be a non-empty string")
         if isinstance(latency_ms, bool) or not isinstance(latency_ms, Real):
-            raise ValueError("latency_ms must be a real number")
+            raise TypeError("latency_ms must be a real number")
         latency = float(latency_ms)
         if not isfinite(latency) or latency < 0:
             raise ValueError("latency_ms must be finite and non-negative")
