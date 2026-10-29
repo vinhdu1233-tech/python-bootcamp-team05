@@ -1,62 +1,70 @@
-"""Parse natural-language due dates."""
 
-import re
-from datetime import date, timedelta
+"""Summarise request counts and latency statistics by route."""
 
-WEEKDAYS = {
-    "mon": 0,
-    "monday": 0,
-    "tue": 1,
-    "tues": 1,
-    "tuesday": 1,
-    "wed": 2,
-    "wednesday": 2,
-    "thu": 3,
-    "thur": 3,
-    "thurs": 3,
-    "thursday": 3,
-    "fri": 4,
-    "friday": 4,
-    "sat": 5,
-    "saturday": 5,
-    "sun": 6,
-    "sunday": 6,
-}
+from collections import Counter
+from collections.abc import Iterable
+from math import ceil, isfinite
+from numbers import Real
+from typing import TypedDict
 
 
-def parse_due(text: str, today: date) -> date:
-    """Convert a date expression into a date.
+class LogStats(TypedDict):
+    """Describe the result returned by log analysis."""
 
-    Accepted formats:
-    - YYYY-MM-DD
-    - tomorrow
-    - in N days
-    - weekday names, such as Fri or Monday
+    counts: dict[str, int]
+    p95: dict[str, float]
+    slowest: str | None
 
-    Weekday names refer to the next occurrence, not today.
+
+def analyse(pairs: Iterable[tuple[str, float]]) -> LogStats:
+    """Return request counts, per-route p95 latency, and the slowest route.
+
+    The p95 uses the nearest-rank method. For each route, latencies are
+    sorted and the value at rank ceil(0.95 * n) is selected.
+
+    If multiple routes have the same p95, the first route encountered
+    is reported as the slowest. Empty input returns empty dictionaries
+    and None for the slowest route.
+
+    Args:
+        pairs: An iterable of (route, latency_ms) pairs.
+
+    Returns:
+        A dictionary containing counts, p95, and slowest.
+
+    Raises:
+        TypeError: If a latency is not a real number.
+        ValueError: If a route is empty or latency is negative or non-finite.
     """
-    value = text.strip().lower()
+    counts: Counter[str] = Counter()
+    latencies: dict[str, list[float]] = {}
 
-    if not value:
-        raise ValueError("Due date cannot be empty")
+    for route, latency_ms in pairs:
+        if not isinstance(route, str) or not route.strip():
+            raise ValueError("route must be a non-empty string")
 
-    if value == "tomorrow":
-        return today + timedelta(days=1)
+        if isinstance(latency_ms, bool) or not isinstance(latency_ms, Real):
+            raise TypeError("latency_ms must be a real number")
 
-    match = re.fullmatch(r"in\s+(\d+)\s+days?", value)
-    if match:
-        return today + timedelta(days=int(match.group(1)))
+        latency = float(latency_ms)
 
-    if value in WEEKDAYS:
-        target_weekday = WEEKDAYS[value]
-        days_ahead = (target_weekday - today.weekday()) % 7
+        if not isfinite(latency) or latency < 0:
+            raise ValueError("latency_ms must be finite and non-negative")
 
-        if days_ahead == 0:
-            days_ahead = 7
+        counts[route] += 1
+        latencies.setdefault(route, []).append(latency)
 
-        return today + timedelta(days=days_ahead)
+    p95: dict[str, float] = {}
 
-    try:
-        return date.fromisoformat(value)
-    except ValueError as error:
-        raise ValueError(f"Invalid due date: {text!r}") from error
+    for route, values in latencies.items():
+        ordered = sorted(values)
+        rank = ceil(0.95 * len(ordered))
+        p95[route] = ordered[rank - 1]
+
+    slowest = max(p95, key=p95.__getitem__) if p95 else None
+
+    return {
+        "counts": dict(counts),
+        "p95": p95,
+        "slowest": slowest,
+    }

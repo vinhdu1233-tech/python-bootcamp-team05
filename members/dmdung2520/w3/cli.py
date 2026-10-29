@@ -1,93 +1,98 @@
+
 """Command-line interface for the Week 3 study planner."""
 
 import argparse
+import math
 import sys
+from collections.abc import Sequence
 from datetime import date
 from pathlib import Path
 
 from members.dmdung2520.w2.io_utils import load_tasks
-from members.dmdung2520.w3.dates import parse_due
+from shared.contract import Task as SharedTask
+from shared.study_planner.allocate import allocate
+from shared.study_planner.prioritise import prioritise
+from shared.study_planner.render import render
+
+
+def _non_negative_hours(value: str) -> float:
+    """Parse a finite, non-negative number of study hours."""
+    try:
+        hours = float(value)
+    except ValueError as error:
+        raise argparse.ArgumentTypeError(
+            "hours must be a number"
+        ) from error
+
+    if not math.isfinite(hours) or hours < 0:
+        raise argparse.ArgumentTypeError(
+            "hours must be finite and non-negative"
+        )
+
+    return hours
 
 
 def build_parser() -> argparse.ArgumentParser:
-    """Create the command-line argument parser."""
-    parser = argparse.ArgumentParser(description="Plan study tasks from a CSV file.")
-    parser.add_argument("csv_file", help="Path to the task CSV file")
+    """Build the argument parser for the study planner CLI."""
+    parser = argparse.ArgumentParser(
+        description="Create a study plan from a task CSV file."
+    )
+    parser.add_argument(
+        "csv_file",
+        type=Path,
+        help="Path to the task CSV file",
+    )
     parser.add_argument(
         "--hours",
-        type=float,
+        type=_non_negative_hours,
         default=2.0,
-        help="Available study hours",
+        help="Available study time in hours (default: 2)",
     )
     parser.add_argument(
         "--today",
-        default=date.today().isoformat(),
-        help="Reference date in YYYY-MM-DD format",
+        type=date.fromisoformat,
+        default=date.today(),
+        metavar="YYYY-MM-DD",
+        help="Reference date (defaults to today)",
     )
     return parser
 
 
-def main() -> int:
-    """Load tasks and display a study plan."""
+def main(argv: Sequence[str] | None = None) -> int:
+    """Run the study planner and return its exit code."""
     parser = build_parser()
-    args = parser.parse_args()
-
-    if args.hours < 0:
-        parser.error("--hours must not be negative")
+    args = parser.parse_args(argv)
 
     try:
-        today = parse_due(args.today, date.today())
-    except ValueError as error:
-        print(f"Invalid --today value: {error}", file=sys.stderr)
-        return 1
-
-    csv_path = Path(args.csv_file)
-
-    if not csv_path.is_file():
-        print(f"Error: file not found: {csv_path}", file=sys.stderr)
-        return 1
-
-    try:
-        tasks = load_tasks(csv_path)
-    except (ValueError, OSError) as error:
-        print(f"Error reading tasks: {error}", file=sys.stderr)
-        return 1
-
-    tasks.sort(
-        key=lambda task: (
-            task.deadline,
-            -task.importance,
-            task.effort_h,
-        )
-    )
-
-    print(f"Study plan for {today.isoformat()}")
-    print(f"Available hours: {args.hours:g}")
-    print("-" * 40)
-
-    remaining_hours = args.hours
-
-    for task in tasks:
-        if remaining_hours <= 0:
-            break
-
-        allocated_hours = min(task.effort_h, remaining_hours)
-
-        if allocated_hours <= 0:
-            continue
-
+        loaded_tasks = load_tasks(args.csv_file)
+    except FileNotFoundError:
         print(
-            f"{task.title} | "
-            f"importance={task.importance} | "
-            f"deadline={task.deadline.isoformat()} | "
-            f"study={allocated_hours:g} hours"
+            f"Error: CSV file not found: {args.csv_file}",
+            file=sys.stderr,
         )
+        return 1
+    except (OSError, ValueError) as error:
+        print(
+            f"Error: could not load tasks: {error}",
+            file=sys.stderr,
+        )
+        return 1
 
-        remaining_hours -= allocated_hours
+    tasks = [
+        SharedTask(
+            title=task.title,
+            importance=task.importance,
+            effort_h=task.effort_h,
+            deadline=task.deadline,
+        )
+        for task in loaded_tasks
+    ]
 
-    print("-" * 40)
-    print(f"Remaining hours: {remaining_hours:g}")
+    ordered_tasks = prioritise(tasks, args.today)
+    blocks = allocate(ordered_tasks, args.hours)
+    output = render(blocks)
 
+    print(output if output else "No study blocks allocated.")
     return 0
 
 
