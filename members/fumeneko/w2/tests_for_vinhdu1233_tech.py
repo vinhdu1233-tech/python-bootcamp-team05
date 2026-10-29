@@ -27,11 +27,11 @@ def test_text_tools_top_k():
 
 def test_thesis_eligibility_success():
     # Kiểm tra điều kiện đủ đăng ký luận văn (W1-3)
-    assert can_register_thesis(125, 2.5) == True
+    assert can_register_thesis(125, 2.5)
 
 def test_thesis_eligibility_missing_reasons():
     # Kiểm tra trường hợp thiếu tín chỉ và GPA (W1-3)
-    assert can_register_thesis(110, 1.8) == False
+    assert not can_register_thesis(110, 1.8)
     reasons = missing(110, 1.8)
     assert isinstance(reasons, list)
     assert len(reasons) > 0
