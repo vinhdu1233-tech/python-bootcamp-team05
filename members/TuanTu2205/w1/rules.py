@@ -1,8 +1,11 @@
 def can_register_thesis(credits: int, gpa: float) -> bool:
+    """Check whether a student is eligible to register for a thesis."""
     return credits >= 120 and gpa >= 2.0
 
+
 def missing(credits: int, gpa: float) -> list[str]:
-    reasons = []
+    """Return reasons why a student cannot register for a thesis."""
+    reasons: list[str] = []
 
     if credits < 120:
         needed = 120 - credits
