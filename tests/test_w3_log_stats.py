@@ -56,11 +56,17 @@ def test_analyse_tied_p95_uses_first_route():
         [("/api", -1)],
         [("/api", float("inf"))],
         [("/api", float("nan"))],
-        [("/api", "fast")],
-        [("/api", None)],
-        [("/api", True)],
     ],
 )
-def test_analyse_rejects_invalid_pairs(pairs):
+def test_analyse_rejects_invalid_values(pairs):
     with pytest.raises(ValueError):
         analyse(pairs)
+
+
+@pytest.mark.parametrize(
+    "latency",
+    ["fast", None, True],
+)
+def test_analyse_rejects_non_numeric_latency_types(latency):
+    with pytest.raises(TypeError, match="latency_ms must be a real number"):
+        analyse([("/api", latency)])
