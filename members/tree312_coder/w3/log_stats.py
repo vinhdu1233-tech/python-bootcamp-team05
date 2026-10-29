@@ -28,10 +28,10 @@ def analyse(
         p95[route] = sorted_values[rank - 1]
 
     if p95:
-        slowest = sorted(
-            p95,
-            key=lambda route: (-p95[route], route),
-        )[0]
+        slowest = min(
+        p95,
+        key=lambda route: (-p95[route], route),
+    )
     else:
         slowest = None
 
