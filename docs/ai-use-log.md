@@ -37,4 +37,4 @@ This section records AI assistance used by Team 05 members during Python Bootcam
 
 | Member | Week | PR | AI Tool | AI Assistance | Verification Status |
 |---|---|---|---|---|---|
-| fumeneko (M5) | W3 | Pending | ChatGPT | Helped design and implement due-date parsing, route latency statistics, a study-planner CLI, pytest cases, type hints, docstrings, and GitHub workflow steps. | The member should review the implementation and run pytest and Ruff before submission. |
+| fumeneko (M5) | W3 | #29 | ChatGPT | Helped design and implement due-date parsing, route latency statistics, a study-planner CLI, pytest cases, type hints, docstrings, GitHub workflow guidance, and fixes for review feedback. | Review fixes committed; CI verification for this revision is pending. |
