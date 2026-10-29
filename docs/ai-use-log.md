@@ -38,3 +38,4 @@ This section records AI assistance used by Team 05 members during Python Bootcam
 | Member | Week | PR | AI Tool | Assistance | AI-generated code retained? |
 |---|---|---|---|---|---|
 | vinhdu1233-tech (M1) | W3 | #35 | ChatGPT | Generated first implementations for W3-1 dates, W3-2 route statistics, W3-3 command-line interface, W3-4 type annotations/docstrings, tests and PR documentation; performed GitHub branch, issue, file commits and PR operations via connected tools. | Yes; the member must personally review, run, understand and explain the submission before individual defence. |
+| fumeneko (M5) | W3 | #29 | ChatGPT | Helped design and implement due-date parsing, route latency statistics, a study-planner CLI, pytest cases, type hints, docstrings, GitHub workflow guidance, and fixes for review feedback. | Yes; AI-generated code was retained. The member remains responsible for reviewing, understanding, and explaining the submission. |
